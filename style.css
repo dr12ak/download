@@ -1,0 +1,163 @@
+:root {
+  --primary-background-color: #0b0f19;
+  --secondary-background-color: #1f2937;
+  --primary-text-color: #ffffff;
+  --secondary-text-color: #9ca3af;
+  --border-color: #374151;
+  --border-radius: 0.3rem;
+  --accent: #0060df;
+  --error: #f44336;
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--primary-text-color);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  font-family: "Roboto Mono", monospace;
+  font-size: 1rem;
+}
+
+body {
+  background-color: var(--primary-background-color);
+}
+
+main {
+  display: flex;
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+}
+
+#file-tree-view {
+  flex: 0 0 0;
+}
+
+@media screen and (orientation: landscape) {
+  main {
+    flex-direction: row;
+    height: 100%;
+  }
+
+  #file-tree-view {
+    flex: 1 1 0;
+  }
+
+  div#preview {
+    border: none;
+    border-left: 0.5rem dashed #ffffff;
+  }
+}
+
+#file-tree {
+  font-size: 1rem;
+  width: fit-content;
+  height: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ul {
+  position: relative;
+  padding-left: 1em;
+}
+
+li {
+  position: relative;
+  list-style: none;
+}
+
+.name {
+  display: flex;
+  width: fit-content;
+  height: 1.2em;
+  white-space: nowrap;
+}
+
+.name > svg {
+  width: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.25em;
+  flex-shrink: 0;
+}
+
+ul::before {
+  content: "";
+  position: absolute;
+  left: 0.5em;
+  top: 0;
+  width: 0;
+  border-left: 0.1em solid #ffffff;
+  height: 100%;
+}
+
+ul > li:last-child::before {
+  content: "";
+  position: absolute;
+  left: -1em;
+  top: calc(0.6em + 0.05em);
+  width: 1em;
+  background-color: var(--primary-background-color);
+  bottom: 0;
+}
+
+ul > li::after {
+  content: "";
+  position: absolute;
+  left: -0.5em;
+  top: 0.6em;
+  width: 0.5em;
+  height: 0;
+  border-bottom: 0.1em solid #ffffff;
+}
+
+#root {
+  position: absolute;
+  top: -1.2em;
+  left: 0.05em;
+}
+
+#root::after {
+  content: none;
+}
+
+#preview {
+  position: relative;
+  height: 100%;
+  border-top: 0.5rem dashed #ffffff;
+  display: none;
+}
+
+#preview > img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#preview.show {
+  display: block;
+}
+
+#close-preview {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: rgba(127, 127, 127, 0.5);
+  cursor: pointer;
+}
