@@ -10,6 +10,14 @@
     <script src="app.js"></script>
   </head>
   <body>
+    <div id="settings">
+      <label>
+        Download as file
+        <input type="checkbox" id="switch-download-type" />
+        Download as zip
+      </label>
+      <button id="delete-all-files" onclick="deleteAllFiles();">Delete all files</button>
+    </div>
     <main>
       <div id="file-tree-view"><ul id="file-tree"></ul></div>
       <div id="preview">

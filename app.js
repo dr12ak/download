@@ -1,5 +1,4 @@
 const client = supabase.createClient("https://yrztxljxuckpokjoqnwu.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlyenR4bGp4dWNrcG9ram9xbnd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQzODk2MTgsImV4cCI6MjAxOTk2NTYxOH0.heP9JaLV9aTQLxs092UvlqaabjJef0cMe5Io3M_97p0");
-
 window.addEventListener("load", async () => {
   await createTree("");
   if (document.querySelectorAll("#file-tree li").length > 0) {
@@ -70,20 +69,24 @@ function isFolder(file) {
 }
 
 async function fetchFolder(path = "") {
-  return (await client.storage.from("images").list(path, { limit: 10000 })).data;
+  return (await client.storage.from("images").list(path, { limit: 10000, sortBy: { column: "updated_at", order: "asc" } })).data;
 }
 
 async function downloadFolder(path) {
   if (confirm(path === "" ? "download everything?" : 'download folder at: "' + path + '"?')) {
     const zip = new JSZip();
     await zipFiles(zip, path);
-    zip.generateAsync({ type: "base64" }).then((base64) => {
-      const a = document.createElement("a");
-      a.href = "data:application/zip;base64," + base64;
-      a.download = "set.zip";
-      a.click();
+    zip.generateAsync({ type: "blob" }).then((blob) => {
+      downloadBlob(blob, "set.zip");
     });
   }
+}
+
+function downloadBlob(blob, fileName) {
+  const a = document.createElement("a");
+  a.href = window.URL.createObjectURL(blob);
+  a.download = fileName;
+  a.click();
 }
 
 async function zipFiles(zip, path) {
@@ -93,7 +96,8 @@ async function zipFiles(zip, path) {
     if (isFolder(file)) await zipFiles(zip, newPath);
     else {
       const blob = await (await fetch("https://yrztxljxuckpokjoqnwu.supabase.co/storage/v1/object/public/images/" + newPath)).blob();
-      zip.file(newPath, blob);
+      if (document.querySelector("#switch-download-type").checked) zip.file(newPath, blob);
+      else downloadBlob(blob, file.name);
     }
   }
 }
@@ -118,3 +122,10 @@ document.addEventListener("keydown", (event) => {
     closePreview();
   }
 });
+
+async function deleteAllFiles() {
+  if (confirm("Delete all files (this cannot be reversed)?")) {
+    await client.storage.emptyBucket("images");
+    location.reload();
+  }
+}
