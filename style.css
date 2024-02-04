@@ -215,3 +215,33 @@ ul > li::after {
   border-radius: var(--border-radius);
   cursor: pointer;
 }
+
+#download-indicator {
+  position: fixed;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+}
+
+.loader {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  position: relative;
+  border: 0.2rem solid var(--border-color);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  vertical-align: sub;
+  margin-left: 0.5rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

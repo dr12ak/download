@@ -75,7 +75,9 @@ async function fetchFolder(path = "") {
 async function downloadFolder(path) {
   if (confirm(path === "" ? "download everything?" : 'download folder at: "' + path + '"?')) {
     const zip = new JSZip();
+    document.querySelector("#download-indicator").style.display = "block";
     await zipFiles(zip, path);
+    document.querySelector("#download-indicator").style.display = "none";
     zip.generateAsync({ type: "blob" }).then((blob) => {
       downloadBlob(blob, "set.zip");
     });
@@ -95,6 +97,7 @@ async function zipFiles(zip, path) {
     const newPath = combinePath(path, file);
     if (isFolder(file)) await zipFiles(zip, newPath);
     else {
+      document.querySelector("#download-indicator > span").innerHTML = newPath;
       const blob = await (await fetch("https://yrztxljxuckpokjoqnwu.supabase.co/storage/v1/object/public/images/" + newPath)).blob();
       if (document.querySelector("#switch-download-type").checked) zip.file(newPath, blob);
       else downloadBlob(blob, file.name);
