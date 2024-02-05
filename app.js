@@ -99,7 +99,7 @@ async function zipFiles(zip, path) {
     else {
       document.querySelector("#download-indicator > span").innerHTML = newPath;
       const blob = await (await fetch("https://yrztxljxuckpokjoqnwu.supabase.co/storage/v1/object/public/images/" + newPath)).blob();
-      if (document.querySelector("#switch-download-type").checked) zip.file(newPath, blob);
+      if (document.querySelector("#switch-download-type").checked) zip.file(combinePath(path, path.match(/([^\/]*)\/*$/)[1] + "-" + file.name), blob);
       else downloadBlob(blob, file.name);
     }
   }
