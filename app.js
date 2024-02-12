@@ -78,9 +78,11 @@ async function downloadFolder(path) {
     document.querySelector("#download-indicator").style.display = "block";
     await zipFiles(zip, path);
     document.querySelector("#download-indicator").style.display = "none";
-    zip.generateAsync({ type: "blob" }).then((blob) => {
-      downloadBlob(blob, "set.zip");
-    });
+    if (Object.keys(zip.files).length > 0) {
+      zip.generateAsync({ type: "blob" }).then((blob) => {
+        downloadBlob(blob, "set.zip");
+      });
+    }
   }
 }
 
@@ -89,6 +91,9 @@ function downloadBlob(blob, fileName) {
   a.href = window.URL.createObjectURL(blob);
   a.download = fileName;
   a.click();
+  setTimeout(() => {
+    window.URL.revokeObjectURL(a.href);
+  }, 0);
 }
 
 async function zipFiles(zip, path) {
