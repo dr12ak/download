@@ -91,9 +91,9 @@ function downloadBlob(blob, fileName) {
   a.href = window.URL.createObjectURL(blob);
   a.download = fileName;
   a.click();
-  setTimeout(() => {
+  /*setTimeout(() => {
     window.URL.revokeObjectURL(a.href);
-  }, 0);
+  }, 0);*/
 }
 
 async function zipFiles(zip, path) {
