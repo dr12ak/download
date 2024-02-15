@@ -77,12 +77,13 @@ async function downloadFolder(path) {
     const zip = new JSZip();
     document.querySelector("#download-indicator").style.display = "block";
     await zipFiles(zip, path);
-    document.querySelector("#download-indicator").style.display = "none";
     if (Object.keys(zip.files).length > 0) {
+      document.querySelector("#download-indicator > span").innerHTML = "generating zip";
       zip.generateAsync({ type: "blob" }).then((blob) => {
         downloadBlob(blob, "set.zip");
       });
     }
+    document.querySelector("#download-indicator").style.display = "none";
   }
 }
 
@@ -91,9 +92,7 @@ function downloadBlob(blob, fileName) {
   a.href = window.URL.createObjectURL(blob);
   a.download = fileName;
   a.click();
-  /*setTimeout(() => {
-    window.URL.revokeObjectURL(a.href);
-  }, 0);*/
+  setTimeout(() => URL.revokeObjectURL(a.href), 60000); // revoke object URL after 1min
 }
 
 async function zipFiles(zip, path) {
@@ -104,8 +103,10 @@ async function zipFiles(zip, path) {
     else {
       document.querySelector("#download-indicator > span").innerHTML = newPath;
       const blob = await (await fetch("https://yrztxljxuckpokjoqnwu.supabase.co/storage/v1/object/public/images/" + newPath)).blob();
-      if (document.querySelector("#switch-download-type").checked) zip.file(combinePath(path, path.match(/([^\/]*)\/*$/)[1] + "-" + file.name), blob);
-      else downloadBlob(blob, file.name);
+      if (document.querySelector("#switch-download-type").checked) {
+        //zip.file(combinePath(path, path.match(/([^\/]*)\/*$/)[1] + "-" + file.name), blob);
+        zip.file(path.match(/([^\/]*)\/*$/)[1] + "-" + file.name, blob);
+      } else downloadBlob(blob, file.name);
     }
   }
 }

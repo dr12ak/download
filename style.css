@@ -167,8 +167,20 @@ ul > li::after {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
   padding: 1rem;
   border-bottom: 0.5rem dashed var(--border-color);
+}
+
+label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+label > * {
+  height: 1.5rem;
 }
 
 #switch-download-type {
@@ -199,7 +211,7 @@ ul > li::after {
   transform: translate(20%, -50%);
   border-radius: 50%;
   background-color: var(--primary-text-color);
-  transition: all cubic-bezier(0.3, 1.5, 0.7, 1) 0.3s;
+  transition: all 0.3s;
 }
 
 #switch-download-type:checked:before {
@@ -208,12 +220,13 @@ ul > li::after {
 }
 
 #delete-all-files {
-  padding: 1rem;
+  padding: 0.5rem;
   border: none;
   outline: none;
   background-color: var(--error);
   border-radius: var(--border-radius);
   cursor: pointer;
+  align-self: stretch;
 }
 
 #download-indicator {
