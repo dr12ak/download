@@ -203,12 +203,11 @@ label > * {
   content: "";
   position: absolute;
   display: block;
-  height: 0;
-  width: 40%;
-  padding-bottom: 40%;
+  height: 1.25rem;
+  width: 1.25rem;
   left: 0;
   top: 50%;
-  transform: translate(20%, -50%);
+  transform: translate(0.125rem, -50%);
   border-radius: 50%;
   background-color: var(--primary-text-color);
   transition: all 0.3s;
@@ -216,7 +215,7 @@ label > * {
 
 #switch-download-type:checked:before {
   left: 100%;
-  transform: translate(-120%, -50%);
+  transform: translate(calc(-100% - 0.125rem), -50%);
 }
 
 #delete-all-files {
@@ -226,13 +225,13 @@ label > * {
   background-color: var(--error);
   border-radius: var(--border-radius);
   cursor: pointer;
-  align-self: stretch;
 }
 
 #download-indicator {
   position: fixed;
   bottom: 0.5rem;
   right: 0.5rem;
+  background-color: var(--primary-background-color);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
 }
