@@ -80,7 +80,7 @@ async function downloadFolder(path) {
     if (Object.keys(zip.files).length > 0) {
       document.querySelector("#download-indicator > span").innerHTML = "generating zip";
       await zip.generateAsync({ type: "blob" }).then((blob) => {
-        downloadBlob(blob, "set.zip");
+        downloadBlob(blob, path === "" ? "set.zip" : path.match(/([^\/]*)\/*$/)[1] + ".zip");
       });
     }
     document.querySelector("#download-indicator").style.display = "none";
