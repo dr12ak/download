@@ -153,15 +153,33 @@ ul > li::after {
   display: block;
 }
 
-#close-preview {
+#close-preview,
+#previous-image,
+#next-image {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  width: 2rem;
   height: 2rem;
-  border-radius: 50%;
+  text-align: center;
   background-color: rgba(127, 127, 127, 0.5);
   cursor: pointer;
+}
+#close-preview {
+  width: 2rem;
+  top: 1rem;
+  right: 1rem;
+  border-radius: 50%;
+  z-index: 1;
+}
+#previous-image {
+  width: 4rem;
+  bottom: 1rem;
+  left: 1rem;
+  border-radius: 1rem;
+}
+#next-image {
+  width: 4rem;
+  bottom: 1rem;
+  right: 1rem;
+  border-radius: 1rem;
 }
 
 #settings {

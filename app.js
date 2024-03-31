@@ -132,6 +132,28 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+function previousImage() {
+  const preview = document.querySelector("img");
+  const path = preview.src.match(/(.*?)(\d+)(\..*$)/)[1];
+  const index = Math.max(parseInt(preview.src.match(/(.*?)(\d+)(\..*$)/)[2]) - 1, 0);
+  const extension = preview.src.match(/(.*?)(\d+)(\..*$)/)[3];
+  preview.src = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 4" width="960" height="1280" fill="%23ffffff"%3E%3Crect width="3" height="4" /%3E%3C/svg%3E`;
+  preview.src = path + index + extension;
+}
+
+function nextImage() {
+  const preview = document.querySelector("img");
+  const path = preview.src.match(/(.*?)(\d+)(\..*$)/)[1];
+  let index = parseInt(preview.src.match(/(.*?)(\d+)(\..*$)/)[2]) + 1;
+  const extension = preview.src.match(/(.*?)(\d+)(\..*$)/)[3];
+  preview.src = `data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 4" width="960" height="1280" fill="%23ffffff"%3E%3Crect width="3" height="4" /%3E%3C/svg%3E`;
+  preview.src = path + index + extension;
+  preview.onerror = () => {
+    index--;
+    preview.src = path + index + extension;
+  };
+}
+
 async function deleteAllFiles() {
   if (confirm("Delete all files (this cannot be reversed)?")) {
     await client.storage.emptyBucket("images");
